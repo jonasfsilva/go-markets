@@ -17,5 +17,6 @@ func HandleResquest() {
 
 	r := mux.NewRouter()
 	r.HandleFunc("/", controllers.Home)
+	r.HandleFunc("/markets", controllers.ListMarkets)
 	log.Fatal(http.ListenAndServe(":8000", r))
 }
