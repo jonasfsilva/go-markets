@@ -15,7 +15,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 func ListMarkets(w http.ResponseWriter, r *http.Request) {
 	models.Markets = []models.Market{
 		{Id: 1, Name: "Nome 1", Description: "Market 1"},
-		{Id: 1, Name: "Nome 1", Description: "Market 2"},
+		{Id: 2, Name: "Nome 2", Description: "Market 2"},
 	}
 	json.NewEncoder(w).Encode(models.Markets)
 }
