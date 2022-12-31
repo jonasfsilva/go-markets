@@ -1,21 +1,26 @@
 package controllers
 
 import (
-	"encoding/json"
-	"fmt"
 	"net/http"
 
+	"github.com/gin-gonic/gin"
+	"github.com/jonasfsilva/go-markets/database"
 	"github.com/jonasfsilva/go-markets/models"
 )
 
-func Home(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "I'm Working")
+func MarketList(c *gin.Context) {
+	var markets []models.Market
+	database.DB.Find(&markets)
+	c.JSON(200, markets)
 }
 
-func ListMarkets(w http.ResponseWriter, r *http.Request) {
-	models.Markets = []models.Market{
-		{Id: 1, Name: "Nome 1", Description: "Market 1"},
-		{Id: 2, Name: "Nome 2", Description: "Market 2"},
+func MarketCreate(c *gin.Context) {
+	var market models.Market
+	if err := c.ShouldBindJSON(&market); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error()})
+		return
 	}
-	json.NewEncoder(w).Encode(models.Markets)
+	database.DB.Create(&market)
+	c.JSON(http.StatusOK, market)
 }

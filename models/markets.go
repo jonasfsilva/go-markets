@@ -1,7 +1,9 @@
 package models
 
+import "gorm.io/gorm"
+
 type Market struct {
-	Id          int    `json:"id"`
+	gorm.Model
 	Name        string `json:"name"`
 	Description string `json:"description"`
 }

@@ -1,22 +1,15 @@
 package routes
 
 import (
-	"log"
-	"net/http"
-	"os"
-
-	"github.com/gorilla/mux"
+	"github.com/gin-gonic/gin"
 	"github.com/jonasfsilva/go-markets/controllers"
 )
 
-func HandleResquest() {
-	httpPort := os.Getenv("HTTP_PORT")
-	if httpPort == "" {
-		httpPort = "8000"
-	}
-
-	r := mux.NewRouter()
-	r.HandleFunc("/", controllers.Home)
-	r.HandleFunc("/markets", controllers.ListMarkets)
-	log.Fatal(http.ListenAndServe(":8000", r))
+func HandleRequests() {
+	r := gin.Default()
+	r.GET("/markets", controllers.MarketList)
+	// r.GET("/:nome", controllers.MarketList)
+	r.POST("/markets", controllers.MarketCreate)
+	// r.GET("/alunos/:id", controllers.BuscaAlunoPorID)
+	r.Run()
 }
